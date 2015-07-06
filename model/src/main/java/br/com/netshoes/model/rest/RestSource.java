@@ -38,8 +38,9 @@ public class RestSource implements DataSource {
     }
 
     public Callback retrofitCallback = new Callback() {
+
         @Override public void success(Object o, Response response) {
-            if (o instanceof ShotsResponse) {
+            if (o instanceof ShotsApiResponse) {
                 ShotsApiResponse shotsApiResponse = (ShotsApiResponse) o;
                 BusProvider.getRestBusInstance().post(shotsApiResponse);
             }

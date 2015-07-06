@@ -14,14 +14,16 @@ public class GetShotsUseCaseController implements GetShotsUseCase {
     private final DataSource mDataSource;
     private final Bus mUiBus;
 
+    private int mPageNumber;
     private ShotsApiResponse mShotsResponse;
 
-    public GetShotsUseCaseController(DataSource dataSource, Bus uiBus) {
+    public GetShotsUseCaseController(DataSource dataSource, Bus uiBus, int pageNumber) {
         if (dataSource == null || uiBus == null)
             throw new IllegalArgumentException("DataSource and Bus cannot be null");
 
         mDataSource = dataSource;
         mUiBus = uiBus;
+        mPageNumber = pageNumber;
 
         BusProvider.getRestBusInstance().register(this);
 
@@ -31,20 +33,19 @@ public class GetShotsUseCaseController implements GetShotsUseCase {
         mDataSource.getShots(page);
     }
 
-    @Override
-    public void onShotsReceived(ShotsApiResponse response) {
+    @Subscribe
+    @Override public void onShotsReceived(ShotsApiResponse response) {
         mShotsResponse = response;
         sendToPresenter();
     }
 
-    @Override
-    public void sendToPresenter() {
+    @Override public void sendToPresenter() {
         mUiBus.post(mShotsResponse);
         BusProvider.getRestBusInstance().unregister(this);
     }
 
     @Override
     public void execute() {
-//        getShots(page);
+        getShots(mPageNumber);
     }
 }

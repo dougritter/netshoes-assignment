@@ -5,11 +5,11 @@ import java.util.List;
 import br.com.netshoes.model.entities.ShotsResponse;
 
 public class ShotsApiResponse extends ApiReponse{
-    private List<ShotsResponse> shots;
-    public List<ShotsResponse> getShots() {
+    private ShotsResponse shots;
+    public ShotsResponse getShots() {
         return shots;
     }
-    public void setShots(List<ShotsResponse> shots) {
+    public void setShots(ShotsResponse shots) {
         this.shots = shots;
     }
 }

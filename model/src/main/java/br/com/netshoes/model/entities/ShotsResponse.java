@@ -13,7 +13,7 @@ public class ShotsResponse {
     @SerializedName("per_page") private int perPage;
     private int pages;
     private int total;
-    List<Shot> shotList;
+    @SerializedName("shots") List<Shot> shotList;
 
     /*
     {
