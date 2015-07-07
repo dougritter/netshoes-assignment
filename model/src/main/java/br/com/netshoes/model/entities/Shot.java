@@ -23,7 +23,7 @@ public class Shot {
     @SerializedName("image_url") private String imageUrl;
     @SerializedName("image_teaser_url") private String imageTeaserUrl;
     @SerializedName("image_400_url") private String image400Url;
-    List<Player> playerList;
+    private Player player;
     @SerializedName("created_at") private String createdAt;
 
     /*
@@ -183,12 +183,12 @@ public class Shot {
         this.image400Url = image400Url;
     }
 
-    public List<Player> getPlayerList() {
-        return playerList;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public String getCreatedAt() {
@@ -216,7 +216,7 @@ public class Shot {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", imageTeaserUrl='" + imageTeaserUrl + '\'' +
                 ", image400Url='" + image400Url + '\'' +
-                ", playerList=" + playerList +
+                ", player=" + player +
                 ", createdAt='" + createdAt + '\'' +
                 '}';
     }
