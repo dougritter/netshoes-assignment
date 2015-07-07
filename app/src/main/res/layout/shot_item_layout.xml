@@ -4,12 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/shotItemImage"
-        android:layout_width="@dimen/shot_image_item_width"
-        android:layout_height="@dimen/shot_image_item_height"
+    <RelativeLayout
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/app_margin_default"
-        android:src="@drawable/dummy_shot"/>
+        android:layout_width="@dimen/shot_image_item_width"
+        android:layout_height="@dimen/shot_image_item_height">
+
+        <ImageView
+            android:id="@+id/shotItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/dummy_shot"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/shot_bottom_bar_height"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shot_bar_gradient"
+            android:alpha="0.7"/>
+
+        <TextView
+            android:id="@+id/shotTitle"
+            style="@style/ShotTitleStyle"
+            android:layout_alignParentBottom="true"
+            tools:text="End of a era"
+            android:layout_marginLeft="@dimen/app_margin_default"
+            android:layout_marginBottom="@dimen/app_margin_default"/>
+
+        <TextView
+            android:id="@+id/shotLikes"
+            style="@style/ShotTitleStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            tools:text="45"
+            android:layout_marginRight="@dimen/shot_likes_margin_right"
+            android:layout_marginBottom="@dimen/app_margin_default"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/shot_likes_icon_margin_bottom"
+            android:layout_marginRight="@dimen/shot_likes_icon_margin_right"
+            android:src="@drawable/ic_like"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

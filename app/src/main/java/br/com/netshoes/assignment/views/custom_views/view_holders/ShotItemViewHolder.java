@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +23,8 @@ public class ShotItemViewHolder extends RecyclerView.ViewHolder {
 
     // UI Objects
     @InjectView(R.id.shotItemImage) ImageView vShotImage;
+    @InjectView(R.id.shotTitle) TextView vShotTitle;
+    @InjectView(R.id.shotLikes) TextView vShotLikes;
 
     public ShotItemViewHolder(View itemView) {
         super(itemView);
@@ -36,8 +39,14 @@ public class ShotItemViewHolder extends RecyclerView.ViewHolder {
         if(mShot.getImageUrl() != null){
             Picasso.with(mContext)
                     .load(mShot.getImageUrl())
+                    .placeholder(R.drawable.placeholder_image)
                     .into(vShotImage);
         }
+
+        if(shot.getTitle() != null){
+            vShotTitle.setText(shot.getTitle());
+        }
+        vShotLikes.setText(Integer.toString(shot.getLikesCount()));
 
     }
 
