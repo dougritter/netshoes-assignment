@@ -31,7 +31,7 @@ public class ShotsPresenter extends Presenter {
     }
 
     @Subscribe public void onShotsReceived(ShotsApiResponse response) {
-        mShotsView.showShots(response.getShots());
+        mShotsView.showShots(response);
     }
 
     @Subscribe public void onError(RetrofitError error) {

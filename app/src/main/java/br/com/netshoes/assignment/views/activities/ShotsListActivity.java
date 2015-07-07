@@ -12,6 +12,7 @@ import br.com.netshoes.assignment.mvp.presenters.ShotsPresenter;
 import br.com.netshoes.assignment.mvp.views.ShotsView;
 import br.com.netshoes.common.utils.BusProvider;
 import br.com.netshoes.model.entities.ShotsResponse;
+import br.com.netshoes.model.responses.ShotsApiResponse;
 
 
 public class ShotsListActivity extends AppCompatActivity implements ShotsView{
@@ -46,8 +47,8 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
         mShotsPresenter.stop();
     }
 
-    @Override public void showShots(ShotsResponse shotsResponse) {
-        Log.e(LOG_TAG, "shots list: "+ shotsResponse);
+    @Override public void showShots(ShotsApiResponse shotsResponse) {
+        Log.e(LOG_TAG, "shots list: "+ shotsResponse.getShots());
     }
 
     @Override public void showLoading() {
