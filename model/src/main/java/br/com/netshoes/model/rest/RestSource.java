@@ -21,9 +21,9 @@ public class RestSource implements DataSource {
 
         RestAdapter netshoesAPIRest = new RestAdapter.Builder()
                 .setEndpoint(namespace)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
-        netshoesAPIRest.setLogLevel(RestAdapter.LogLevel.FULL);
         mNetshoesAPI = netshoesAPIRest.create(NetshoesApi.class);
     }
 
@@ -40,8 +40,9 @@ public class RestSource implements DataSource {
     public Callback retrofitCallback = new Callback() {
 
         @Override public void success(Object o, Response response) {
-            if (o instanceof ShotsApiResponse) {
-                ShotsApiResponse shotsApiResponse = (ShotsApiResponse) o;
+            if (o instanceof ShotsResponse) {
+                ShotsApiResponse shotsApiResponse = new ShotsApiResponse();
+                shotsApiResponse.setShots((ShotsResponse) o);
                 BusProvider.getRestBusInstance().post(shotsApiResponse);
             }
         }
