@@ -45,8 +45,13 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mShotsList.size();
     }
 
-    public void refreshShots(List<Shot> shots) {
-        mShotsList = (ArrayList<Shot>) shots;
+    /*public void refreshShots(List<Shot> shots) {
+        mShotsList = shots;
+        notifyDataSetChanged();
+    }*/
+
+    public void appendShotItems(List<Shot> shots) {
+        mShotsList.addAll(shots);
         notifyDataSetChanged();
     }
 }

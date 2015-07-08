@@ -61,5 +61,12 @@ public class ShotsPresenter extends Presenter {
         }
     }
 
+    public void getOlderPosts(int page) {
+//        mShotsView.showLoading();
+        UseCase getShots = new GetShotsUseCaseController(RestSource.getInstance(AppUrls.DEFAULT_NAMESPACE), BusProvider.getUIBusInstance(), page);
+        getShots.execute();
+//        getOlderLHItems.getLiveHubBeforeDate(timestamp);
+    }
+
 
 }

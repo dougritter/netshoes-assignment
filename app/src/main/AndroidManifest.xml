@@ -22,6 +22,10 @@
         <activity
             android:name=".views.activities.ShotDetailActivity"
             android:label="@string/title_activity_shot_detail" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activities.ShotsListActivity" />
         </activity>
     </application>
 

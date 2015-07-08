@@ -1,6 +1,7 @@
 package br.com.netshoes.assignment.views.activities;
 
 import android.content.Context;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -73,25 +74,29 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
     }
 
     @Override public void showShotDetail(ShotDetailApiResponse shotDetailApiResponse) {
-        Log.e(LOG_TAG, "shotDetail: "+shotDetailApiResponse.getShotDetail());
+        Log.d(LOG_TAG, "shotDetail: " + shotDetailApiResponse.getShotDetail());
 
         Shot shot = shotDetailApiResponse.getShotDetail();
 
-        Picasso.with(this)
-                .load(shot.getImageUrl())
-                .placeholder(R.drawable.placeholder_image)
-                .into(mShotImage);
+        if(shot.getImageUrl() != null){
+            Picasso.with(this)
+                    .load(shot.getImageUrl())
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(mShotImage);
+        }
 
-        mShotTitle.setText(shot.getTitle());
-        mShotLikes.setText(Integer.toString(shot.getLikesCount()));
+        mShotTitle.setText(shot.getTitle() != null ? shot.getTitle() : "");
+        mShotLikes.setText(shot.getLikesCount() >= 0 ? Integer.toString(shot.getLikesCount()) : "0");
 
-        Picasso.with(this)
-                .load(shot.getPlayer().getAvatarUrl())
-                .placeholder(R.drawable.placeholder_image)
-                .into(mShotDetailAvatar);
+        if(shot.getPlayer().getAvatarUrl() != null){
+            Picasso.with(this)
+                    .load(shot.getPlayer().getAvatarUrl())
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(mShotDetailAvatar);
+        }
 
-        mShotDetailUsername.setText(shot.getPlayer().getUsername());
-        mShotDetailDescription.setText(Html.fromHtml(shot.getDescription()));
+        mShotDetailUsername.setText(shot.getPlayer().getUsername() != null ? shot.getPlayer().getUsername() : "");
+        mShotDetailDescription.setText(shot.getDescription() != null ? Html.fromHtml(shot.getDescription()) : "");
 
     }
 
@@ -113,5 +118,23 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
 
     @Override public Context getContext() {
         return this;
+    }
+
+    @Override public void onBackPressed() {
+        finish();
+    }
+
+    @Override public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_from_internal, R.anim.slide_out_from_internal);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

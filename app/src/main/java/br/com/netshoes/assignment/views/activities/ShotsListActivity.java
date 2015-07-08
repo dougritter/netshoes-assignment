@@ -30,6 +30,7 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
     private ShotsAdapter mShotsAdapter;
     private LinearLayoutManager mLayoutManager;
     private int countPages = 1;
+    private int maxPages = 0;
 
     //UI Objects
     @InjectView(R.id.shotsList) protected RecyclerView mShotsList;
@@ -47,6 +48,7 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mShotsList.setLayoutManager(mLayoutManager);
         mShotsList.setAdapter(mShotsAdapter);
+        mShotsList.setOnScrollListener(mLiveHubScrollListener);
 
     }
 
@@ -66,8 +68,10 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
     }
 
     @Override public void showShots(ShotsApiResponse shotsResponse) {
-        Log.e(LOG_TAG, "shots list: "+ shotsResponse.getShots());
-        mShotsAdapter.refreshShots(shotsResponse.getShots().getShotList());
+        mShotsAdapter.appendShotItems(shotsResponse.getShots().getShotList());
+        if(maxPages == 0){
+            shotsResponse.getShots().getPages();
+        }
     }
 
     @Override public void showLoading() {
@@ -79,7 +83,7 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
     }
 
     @Override public void showError(String error) {
-        Log.e(LOG_TAG, "Error: "+ error);
+        Log.e(LOG_TAG, "Error: " + error);
     }
 
     @Override public void hideError() {
@@ -88,5 +92,32 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
 
     @Override public Context getContext() {
         return this;
+    }
+
+    private RecyclerView.OnScrollListener mLiveHubScrollListener = new RecyclerView.OnScrollListener() {
+        private int scrollAmount = 0;
+
+        @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            scrollAmount = scrollAmount + dy;
+            loadMoreOnReachBottom();
+        }
+    };
+
+    private void loadMoreOnReachBottom() {
+        int pastVisibleItems, visibleItemCount, totalItemCount;
+
+        visibleItemCount = mLayoutManager.getChildCount();
+        totalItemCount = mLayoutManager.getItemCount();
+        pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
+
+        if (((visibleItemCount + pastVisibleItems) >= totalItemCount) && (countPages + 1) <= maxPages) {
+            mShotsPresenter.getOlderPosts(countPages++);
+        }
+
     }
 }

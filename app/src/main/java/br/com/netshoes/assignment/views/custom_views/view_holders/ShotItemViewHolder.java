@@ -1,5 +1,6 @@
 package br.com.netshoes.assignment.views.custom_views.view_holders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -55,8 +56,12 @@ public class ShotItemViewHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(mContext, ShotDetailActivity.class);
+
+        Activity activity = (Activity) mContext;
+
+        Intent intent = new Intent(activity, ShotDetailActivity.class);
         intent.putExtra(Constants.SHOT_DETAIL_EXTRA_ID, mShot.getId());
-        mContext.startActivity(intent);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.slide_in_from_main, R.anim.slide_out_from_main);
     }
 }

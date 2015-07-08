@@ -10,7 +10,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/shot_title_text_size</item>
         <item name="android:textColor">@android:color/white</item>
-        <!--<item name="android:typeface">monospace</item>-->
+    </style>
+
+
+    <style name="ShotDetailUsernameStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/shot_detail_username_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="ShotDetailDescriptionStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>
