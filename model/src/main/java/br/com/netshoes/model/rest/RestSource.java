@@ -4,7 +4,9 @@ import com.squareup.okhttp.OkHttpClient;
 
 import br.com.netshoes.common.utils.BusProvider;
 import br.com.netshoes.model.DataSource;
+import br.com.netshoes.model.entities.Shot;
 import br.com.netshoes.model.entities.ShotsResponse;
+import br.com.netshoes.model.responses.ShotDetailApiResponse;
 import br.com.netshoes.model.responses.ShotsApiResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -37,13 +39,21 @@ public class RestSource implements DataSource {
         mNetshoesAPI.getShots(page, retrofitCallback);
     }
 
-    public Callback retrofitCallback = new Callback() {
+    @Override public void getShotDetail(int id) {
+        mNetshoesAPI.getShotDetail(id, retrofitCallback);
+    }
 
+    public Callback retrofitCallback = new Callback() {
         @Override public void success(Object o, Response response) {
             if (o instanceof ShotsResponse) {
                 ShotsApiResponse shotsApiResponse = new ShotsApiResponse();
                 shotsApiResponse.setShots((ShotsResponse) o);
                 BusProvider.getRestBusInstance().post(shotsApiResponse);
+
+            } else if(o instanceof Shot) {
+                ShotDetailApiResponse shotDetailApiResponse = new ShotDetailApiResponse();
+                shotDetailApiResponse.setShotDetail((Shot) o);
+                BusProvider.getRestBusInstance().post(shotDetailApiResponse);
             }
         }
 
