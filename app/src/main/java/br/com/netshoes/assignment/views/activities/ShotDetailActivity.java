@@ -78,25 +78,32 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
 
         Shot shot = shotDetailApiResponse.getShotDetail();
 
-        if(shot.getImageUrl() != null){
-            Picasso.with(this)
-                    .load(shot.getImageUrl())
-                    .placeholder(R.drawable.placeholder_image)
-                    .into(mShotImage);
+        if(shot != null){
+            if(shot.getImageUrl() != null){
+                Picasso.with(this)
+                        .load(shot.getImageUrl())
+                        .placeholder(R.drawable.placeholder_image)
+                        .into(mShotImage);
+            }
+
+            mShotTitle.setText(shot.getTitle() != null ? shot.getTitle() : "");
+            mShotLikes.setText(shot.getLikesCount() >= 0 ? Integer.toString(shot.getLikesCount()) : "0");
+
+            if(shot.getPlayer() != null){
+                if(shot.getPlayer().getAvatarUrl() != null){
+                    Picasso.with(this)
+                            .load(shot.getPlayer().getAvatarUrl())
+                            .placeholder(R.drawable.placeholder_image)
+                            .into(mShotDetailAvatar);
+                }
+                mShotDetailUsername.setText(shot.getPlayer().getUsername() != null ? shot.getPlayer().getUsername() : "");
+            }
+
+            mShotDetailDescription.setText(shot.getDescription() != null ? Html.fromHtml(shot.getDescription()) : "");
+
+
         }
 
-        mShotTitle.setText(shot.getTitle() != null ? shot.getTitle() : "");
-        mShotLikes.setText(shot.getLikesCount() >= 0 ? Integer.toString(shot.getLikesCount()) : "0");
-
-        if(shot.getPlayer().getAvatarUrl() != null){
-            Picasso.with(this)
-                    .load(shot.getPlayer().getAvatarUrl())
-                    .placeholder(R.drawable.placeholder_image)
-                    .into(mShotDetailAvatar);
-        }
-
-        mShotDetailUsername.setText(shot.getPlayer().getUsername() != null ? shot.getPlayer().getUsername() : "");
-        mShotDetailDescription.setText(shot.getDescription() != null ? Html.fromHtml(shot.getDescription()) : "");
 
     }
 

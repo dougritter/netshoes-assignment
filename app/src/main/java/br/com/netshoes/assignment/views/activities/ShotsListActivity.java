@@ -68,9 +68,12 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
     }
 
     @Override public void showShots(ShotsApiResponse shotsResponse) {
-        mShotsAdapter.appendShotItems(shotsResponse.getShots().getShotList());
-        if(maxPages == 0){
-            shotsResponse.getShots().getPages();
+        if(shotsResponse != null && shotsResponse.getShots() != null
+                && shotsResponse.getShots().getShotList() != null){
+            mShotsAdapter.appendShotItems(shotsResponse.getShots().getShotList());
+            if(maxPages == 0){
+                shotsResponse.getShots().getPages();
+            }
         }
     }
 
