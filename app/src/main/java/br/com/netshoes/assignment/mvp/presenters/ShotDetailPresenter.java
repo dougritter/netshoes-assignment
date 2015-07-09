@@ -31,6 +31,7 @@ public class ShotDetailPresenter extends Presenter {
 
     @Subscribe public void onShotsReceived(ShotDetailApiResponse response) {
         mShotDetailView.showShotDetail(response);
+        mShotDetailView.hideLoading();
     }
 
     @Subscribe public void onError(RetrofitError error) {

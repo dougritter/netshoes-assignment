@@ -10,7 +10,7 @@ import br.com.netshoes.model.responses.ShotsApiResponse;
  */
 public interface ShotsView extends MVPView {
     void showShots (ShotsApiResponse shotsResponse);
-    void showLoading ();
+    void showLoading (boolean alreadyHasItems);
     void hideLoading ();
     void showError (String error);
     void hideError ();

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import br.com.netshoes.model.entities.ShotsResponse;
 import br.com.netshoes.model.responses.ShotsApiResponse;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import pl.tajchert.sample.DotsTextView;
 
 
 public class ShotsListActivity extends AppCompatActivity implements ShotsView{
@@ -34,6 +36,7 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
 
     //UI Objects
     @InjectView(R.id.shotsList) protected RecyclerView mShotsList;
+    @InjectView(R.id.dots) protected DotsTextView mDots;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
 
     public void getData(){
         mShotsPresenter.start();
-
+        showLoading(mShotsAdapter != null && mShotsAdapter.getItemCount() > 0 ? true : false);
     }
 
     @Override protected void onStop() {
@@ -71,18 +74,25 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
         if(shotsResponse != null && shotsResponse.getShots() != null
                 && shotsResponse.getShots().getShotList() != null){
             mShotsAdapter.appendShotItems(shotsResponse.getShots().getShotList());
+            Log.d(LOG_TAG, "appendShotItems of page: "+shotsResponse.getShots().getPage());
             if(maxPages == 0){
-                shotsResponse.getShots().getPages();
+                maxPages = shotsResponse.getShots().getPages();
             }
+            countPages++;
         }
     }
 
-    @Override public void showLoading() {
-
+    @Override public void showLoading(boolean alreadyHasItems) {
+        Log.d(LOG_TAG, "showLoading");
+        mDots.showAndPlay();
+        mDots.setTextColor(alreadyHasItems ? getResources().getColor(android.R.color.white) : getResources().getColor(R.color.primary));
+        mDots.setVisibility(View.VISIBLE);
     }
 
     @Override public void hideLoading() {
-
+        Log.d(LOG_TAG, "hideLoading");
+        mDots.hideAndStop();
+        mDots.setVisibility(View.GONE);
     }
 
     @Override public void showError(String error) {
@@ -118,8 +128,8 @@ public class ShotsListActivity extends AppCompatActivity implements ShotsView{
         totalItemCount = mLayoutManager.getItemCount();
         pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
 
-        if (((visibleItemCount + pastVisibleItems) >= totalItemCount) && (countPages + 1) <= maxPages) {
-            mShotsPresenter.getOlderPosts(countPages++);
+        if (((visibleItemCount + pastVisibleItems) >= totalItemCount) && (countPages) <= maxPages) {
+            mShotsPresenter.getOlderPosts(countPages);
         }
 
     }

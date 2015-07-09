@@ -4,14 +4,10 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.netshoes.assignment.mvp.views.ShotsView;
 import br.com.netshoes.common.utils.BusProvider;
 import br.com.netshoes.domain.GetShotsUseCaseController;
 import br.com.netshoes.domain.UseCase;
-import br.com.netshoes.model.entities.ShotsResponse;
 import br.com.netshoes.model.responses.ShotsApiResponse;
 import br.com.netshoes.model.rest.AppUrls;
 import br.com.netshoes.model.rest.RestSource;
@@ -24,14 +20,21 @@ public class ShotsPresenter extends Presenter {
     public static final String LOG_TAG = ShotsPresenter.class.getSimpleName();
     private final ShotsView mShotsView;
     private int mPageNumber;
+    private boolean mIsLoading;
+    private boolean mRegistered;
 
     public ShotsPresenter(ShotsView shotsView, int pageNumber) {
         mShotsView = shotsView;
         mPageNumber = pageNumber;
+        mIsLoading = false;
+        mRegistered = false;
     }
 
     @Subscribe public void onShotsReceived(ShotsApiResponse response) {
         mShotsView.showShots(response);
+        mIsLoading = false;
+        mShotsView.hideLoading();
+        stop();
     }
 
     @Subscribe public void onError(RetrofitError error) {
@@ -40,11 +43,15 @@ public class ShotsPresenter extends Presenter {
 
     @Override public void start() {
         try {
+            mIsLoading = true;
+            mShotsView.showLoading(mPageNumber > 1 ? true : false);
             BusProvider.getUIBusInstance().register(this);
+            mRegistered = true;
             UseCase getShots = new GetShotsUseCaseController(RestSource.getInstance(AppUrls.DEFAULT_NAMESPACE), BusProvider.getUIBusInstance(), mPageNumber);
             getShots.execute();
         } catch (IllegalArgumentException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
+            mIsLoading = false;
         }
     }
 
@@ -55,17 +62,22 @@ public class ShotsPresenter extends Presenter {
 
     @Override public void stop() {
         try {
-            BusProvider.getUIBusInstance().unregister(this);
+            mIsLoading = false;
+            if(mRegistered){
+                BusProvider.getUIBusInstance().unregister(this);
+                mRegistered = false;
+            }
         } catch (IllegalArgumentException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
     }
 
     public void getOlderPosts(int page) {
-//        mShotsView.showLoading();
-        UseCase getShots = new GetShotsUseCaseController(RestSource.getInstance(AppUrls.DEFAULT_NAMESPACE), BusProvider.getUIBusInstance(), page);
-        getShots.execute();
-//        getOlderLHItems.getLiveHubBeforeDate(timestamp);
+        if(!mIsLoading){
+            mPageNumber = page;
+            start();
+            Log.e(LOG_TAG, "getOlderPosts - page: "+page);
+        }
     }
 
 

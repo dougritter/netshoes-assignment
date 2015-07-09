@@ -76,7 +76,7 @@ public class ShotsListActivityTest extends ActivityInstrumentationTestCase2<Shot
     }
 
     public void testShowLoading() throws Exception {
-        mShotsListActivity.showLoading();
+        mShotsListActivity.showLoading(false);
     }
 
     public void testHideLoading() throws Exception {

@@ -1,21 +1,16 @@
 package br.com.netshoes.assignment.views.activities;
 
 import android.content.Context;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import br.com.netshoes.assignment.R;
 import br.com.netshoes.assignment.mvp.presenters.ShotDetailPresenter;
@@ -26,6 +21,7 @@ import br.com.netshoes.model.entities.Shot;
 import br.com.netshoes.model.responses.ShotDetailApiResponse;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import pl.tajchert.sample.DotsTextView;
 
 public class ShotDetailActivity extends AppCompatActivity implements ShotDetailView{
     // Constants
@@ -42,6 +38,7 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
     @InjectView(R.id.shotDetailAvatar) ImageView mShotDetailAvatar;
     @InjectView(R.id.shotDetailUsername) TextView mShotDetailUsername;
     @InjectView(R.id.shotDetailDescription) TextView mShotDetailDescription;
+    @InjectView(R.id.dots) DotsTextView mDots;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +58,7 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
     @Override protected void onStart() {
         super.onStart();
         getData();
+        showLoading();
     }
 
     public void getData(){
@@ -101,18 +99,20 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
 
             mShotDetailDescription.setText(shot.getDescription() != null ? Html.fromHtml(shot.getDescription()) : "");
 
-
         }
-
 
     }
 
     @Override public void showLoading() {
-
+        Log.d(LOG_TAG, "showLoading");
+        mDots.showAndPlay();
+        mDots.setVisibility(View.VISIBLE);
     }
 
     @Override public void hideLoading() {
-
+        Log.d(LOG_TAG, "hideLoading");
+        mDots.hideAndStop();
+        mDots.setVisibility(View.GONE);
     }
 
     @Override public void showError(String error) {
