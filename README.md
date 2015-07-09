@@ -1,3 +1,5 @@
+##Douglas Ritter - Assignment
+
 Para a execução do projeto, foi utilizada a arquitetura Model-View-Presenter, conforme a imagem abaixo.
 A ideia é combater um problema comum no Android, que é colocar muita lógica nas activities.
 O json de detalhe está sendo buscado propositalmente, para aproveitar a arquitetura. Fiz isso sabendo que o json da lista traz os detalhes do post.
