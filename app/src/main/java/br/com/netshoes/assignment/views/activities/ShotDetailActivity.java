@@ -85,13 +85,10 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
                         .load(shot.getImageUrl())
                         .placeholder(R.drawable.placeholder_image)
                         .into(mShotImage, new Callback() {
-                            @Override
-                            public void onSuccess() {
+                            @Override public void onSuccess() {
                                 mSharesContainer.setVisibility(View.VISIBLE);
                             }
-
-                            @Override
-                            public void onError() {}
+                            @Override public void onError() {}
                         });
             }
 
