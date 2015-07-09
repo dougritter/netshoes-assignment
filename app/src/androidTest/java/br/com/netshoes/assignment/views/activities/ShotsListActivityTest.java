@@ -75,8 +75,13 @@ public class ShotsListActivityTest extends ActivityInstrumentationTestCase2<Shot
         super.tearDown();
     }
 
-    public void testShowLoading() throws Exception {
-        mShotsListActivity.showLoading(false);
+    public void testShowLoading() throws Throwable {
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mShotsListActivity.showLoading(false);
+            }
+        });
     }
 
     public void testHideLoading() throws Exception {
