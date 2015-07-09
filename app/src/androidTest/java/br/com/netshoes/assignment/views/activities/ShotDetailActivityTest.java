@@ -62,12 +62,23 @@ public class ShotDetailActivityTest extends ActivityInstrumentationTestCase2<Sho
         });
     }
 
-    public void testShowLoading() throws Exception {
-        mShotDetailActivity.showLoading();
+    public void testShowLoading() throws Throwable {
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mShotDetailActivity.showLoading();
+            }
+        });
     }
 
-    public void testHideLoading() throws Exception {
-        mShotDetailActivity.hideLoading();
+    public void testHideLoading() throws Throwable {
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mShotDetailActivity.hideLoading();
+
+            }
+        });
     }
 
     public void testShowError() throws Exception {

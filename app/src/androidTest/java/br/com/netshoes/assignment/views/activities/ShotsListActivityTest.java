@@ -84,8 +84,13 @@ public class ShotsListActivityTest extends ActivityInstrumentationTestCase2<Shot
         });
     }
 
-    public void testHideLoading() throws Exception {
-        mShotsListActivity.hideLoading();
+    public void testHideLoading() throws Throwable {
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mShotsListActivity.hideLoading();
+            }
+        });
     }
 
     public void testHideError() throws Exception {

@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import br.com.netshoes.assignment.R;
@@ -39,6 +41,7 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
     @InjectView(R.id.shotDetailUsername) TextView mShotDetailUsername;
     @InjectView(R.id.shotDetailDescription) TextView mShotDetailDescription;
     @InjectView(R.id.dots) DotsTextView mDots;
+    @InjectView(R.id.sharesContainer) LinearLayout mSharesContainer;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +84,15 @@ public class ShotDetailActivity extends AppCompatActivity implements ShotDetailV
                 Picasso.with(this)
                         .load(shot.getImageUrl())
                         .placeholder(R.drawable.placeholder_image)
-                        .into(mShotImage);
+                        .into(mShotImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                mSharesContainer.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onError() {}
+                        });
             }
 
             mShotTitle.setText(shot.getTitle() != null ? shot.getTitle() : "");

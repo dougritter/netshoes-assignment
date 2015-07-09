@@ -15,7 +15,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/placeholder_image"/>
-        
+
+        <LinearLayout
+            android:id="@+id/sharesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/shot_shares_container_height"
+            android:layout_marginBottom="@dimen/shot_shares_container_margin_bottom"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_twitter"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/shot_shares_margin_left"
+                android:src="@drawable/logo_unknown"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/shot_shares_margin_left"
+                android:src="@drawable/logo_instagram"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/shot_shares_margin_left"
+                android:src="@drawable/logo_dribbble"/>
+
+        </LinearLayout>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/shot_bottom_bar_height"
