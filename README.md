@@ -9,6 +9,7 @@ Referência para a arquitetura utilizada: http://saulmm.github.io/2015/02/02/A%2
 
 Foram utilizadas libs para comunicação com o servidor, para o parse do json, para mascarar a imagem do profile e para os testes unitários.
 Foi implementado teste de interface, mas a API necessária é a 18 para o UI Automator, então optei por retirar (o histórico está no git).
+Para fazer a comunicação entre os módulos, foi utilizado o event bus Otto.
 
 Criei algumas imagens com base no mockup, para o placeholder e para os ícones de share.
 A barra abaixo do nome e os likes foi feita com gradiente.
